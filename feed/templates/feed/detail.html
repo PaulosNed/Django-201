@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}
+    Detailed View
+{% endblock%}
+
+{% block body %}
+
+    <div class=" py-4 px-5 bg-white shadow-lg rounded-lg my-20" style="width: 75%">
+        <div class="flex justify-center md:justify-end -mt-16">
+            {% thumbnail post.author.profile.image "373x372" crop="center" as im %}
+                <img class="w-20 h-20 object-cover rounded-full border-2 border-indigo-500" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="avatar">
+            {% endthumbnail %}
+        </div>
+        <div>
+          {% comment %} <h2 class="text-gray-800 text-3xl font-semibold">Written by, </h2> {% endcomment %}
+          <p class="mt-2 text-gray-600">{{post.text}}</p>
+        </div>
+        <div class="flex justify-end mt-4">
+          <a href="#" class="text-xl font-medium text-indigo-500">{{post.author.username}}</a>
+        </div>
+      </div>
+{% endblock%}

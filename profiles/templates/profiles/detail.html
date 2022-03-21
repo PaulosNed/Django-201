@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}{{user.username}}{% endblock%}
+
+{% block body %}
+    <div class="rounded-3xl overflow-hidden shadow-xl max-w-xs my-3 bg-blue-500">
+        <img src="https://i.imgur.com/dYcYQ7E.png" class="w-full" />
+        <div class="flex justify-center -mt-8">
+            {% thumbnail user.profile.image "100x100" crop="center" as im %}
+                <img class="rounded-full border-solid border-white border-2 -mt-3" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="avatar">
+            {% endthumbnail %}	
+        </div>
+        <div class="text-center px-3 pb-6 pt-2">
+            <h3 class="text-white text-sm bold font-sans">{{user.username}}</h3>
+        </div>
+        {% if request.user.is_authenticated %}
+            {% if request.user != user %}
+                <div class="text-center px-3">
+                    <button class="mx-2 my-2 bg-gray-300 transition duration-150 ease-in-out hover:bg-gray-400 rounded text-indigo-700 px-6 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-indigo-700" typr="submit">Follow</button>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center pb-5" style="text-decoration: underline;">
+                <a href="{% url 'account_login' %}"><p class="mt-2 font-sans font-light text-white">Login to follow this account</p></a> 
+            </div> 
+        {% endif %}
+        <div class="flex justify-center pb-3 text-white">
+            <div class="text-center mr-3 border-r pr-3">
+                <h2>{{total_post}}</h2>
+                <span>Posts</span>
+            </div>
+            <div class="text-center">
+                <h2>{#TODO add no of followers #}</h2>
+                <span>Followers</span>
+            </div>
+        </div>
+    </div>
+{% endblock%}
